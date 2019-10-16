@@ -157,7 +157,7 @@ import UIKit
     @IBInspectable open var step: CGFloat = 0.0
 
     /// Handle slider with custom image, you can set custom image for your handle
-    @IBInspectable open var handleImage: UIImage? {
+    /*@IBInspectable open var handleImage: UIImage? {
         didSet {
             guard let image = handleImage else {
                 return
@@ -169,6 +169,36 @@ import UIKit
             leftHandle.frame = handleFrame
             leftHandle.contents = image.cgImage
 
+            rightHandle.frame = handleFrame
+            rightHandle.contents = image.cgImage
+        }
+    }*/
+    
+    /// Handle slider with custom left image, you can set custom image for your handle
+    @IBInspectable open var leftHandleImage: UIImage? {
+        didSet {
+            guard let image = leftHandleImage else {
+                return
+            }
+            
+            var handleFrame = CGRect.zero
+            handleFrame.size = image.size
+            
+            leftHandle.frame = handleFrame
+            leftHandle.contents = image.cgImage
+        }
+    }
+    
+    /// Handle slider with custom right image, you can set custom image for your handle
+    @IBInspectable open var rightHandleImage: UIImage? {
+        didSet {
+            guard let image = rightHandleImage else {
+                return
+            }
+            
+            var handleFrame = CGRect.zero
+            handleFrame.size = image.size
+            
             rightHandle.frame = handleFrame
             rightHandle.contents = image.cgImage
         }
@@ -505,11 +535,19 @@ import UIKit
             sliderLineBetweenHandles.backgroundColor = initialColor
             sliderLine.backgroundColor = initialColor
 
-            let color: CGColor = (handleImage == nil) ? initialColor : UIColor.clear.cgColor
+            /*let color: CGColor = (handleImage == nil) ? initialColor : UIColor.clear.cgColor
             leftHandle.backgroundColor = color
             leftHandle.borderColor = color
             rightHandle.backgroundColor = color
-            rightHandle.borderColor = color
+            rightHandle.borderColor = color*/
+            
+            let leftColor: CGColor = (leftHandleImage == nil) ? initialColor : UIColor.clear.cgColor
+            leftHandle.backgroundColor = leftColor
+            leftHandle.borderColor = leftColor
+
+            let rightColor: CGColor = (rightHandleImage == nil) ? initialColor : UIColor.clear.cgColor
+            rightHandle.backgroundColor = rightColor
+            rightHandle.borderColor = rightColor
         } else {
             let tintCGColor: CGColor = tintColor.cgColor
             minLabel.foregroundColor = minLabelColor?.cgColor ?? tintCGColor
@@ -517,7 +555,7 @@ import UIKit
             sliderLineBetweenHandles.backgroundColor = colorBetweenHandles?.cgColor ?? tintCGColor
             sliderLine.backgroundColor = tintCGColor
 
-            let color: CGColor
+            /*let color: CGColor
             if let _ = handleImage {
                 color = UIColor.clear.cgColor
             } else {
@@ -526,6 +564,14 @@ import UIKit
             leftHandle.backgroundColor = color
             leftHandle.borderColor = handleBorderColor.map { $0.cgColor }
             rightHandle.backgroundColor = color
+            rightHandle.borderColor = handleBorderColor.map { $0.cgColor }*/
+            
+            let leftColor: CGColor = (leftHandleImage == nil) ? (handleColor?.cgColor ?? tintCGColor) : UIColor.clear.cgColor
+            leftHandle.backgroundColor = leftColor
+            leftHandle.borderColor = handleBorderColor.map { $0.cgColor }
+            
+            let rightColor: CGColor = (rightHandleImage == nil) ? (handleColor?.cgColor ?? tintCGColor) : UIColor.clear.cgColor
+            rightHandle.backgroundColor = rightColor
             rightHandle.borderColor = handleBorderColor.map { $0.cgColor }
         }
     }
